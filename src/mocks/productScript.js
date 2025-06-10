@@ -1,4 +1,4 @@
-const productMocks = {
+export const productMocks = {
   status: "success",
   message: "조회가 완료되었습니다.",
   data: [

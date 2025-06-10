@@ -3,7 +3,7 @@ import useSlider from "../../../hooks/useSlider";
 import useSwipers from "../../../store/swiperStore";
 import ProductsSwiper from "./ProductsSwiper";
 import SwiperBar from "./SwiperBar";
-import productMocks from "../../../mocks/productScript";
+import { productMocks } from "../../../mocks/productScript";
 
 const ProductsContent = () => {
   const [store, setStore] = useState([]);

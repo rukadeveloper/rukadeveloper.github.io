@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import { useNavigate } from "react-router-dom";
 
 import {
   validate,
@@ -11,7 +10,6 @@ import {
 
 import styled from "styled-components";
 import NewInputWrapper from "./NewInputWrapper";
-import axios from "axios";
 
 const JoinWrap = styled.div`
   form {
@@ -141,7 +139,6 @@ const joinReducer = (state, action) => {
 };
 
 const JoinWrapper = () => {
-  const navigate = useNavigate();
   const [joinState, dispatch] = useReducer(joinReducer, {
     idVal: "",
     idEngValid: false,
