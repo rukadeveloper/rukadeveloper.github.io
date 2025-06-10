@@ -58,8 +58,8 @@ const ProductsContent = () => {
             }px)`,
           }}
         >
-          {store.map((stores) => (
-            <ProductsSwiper stores={productMocks.data} key={stores.id} />
+          {productMocks.data.map((stores) => (
+            <ProductsSwiper stores={stores} key={stores.id} />
           ))}
         </div>
         <SwiperBar ref={sliderRef} />
