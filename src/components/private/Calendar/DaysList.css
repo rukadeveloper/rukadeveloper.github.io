@@ -1,0 +1,77 @@
+.swiper.days__list {
+  margin-top: 2rem;
+  .swiper-slide {
+    button {
+      width: 100%;
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.7rem;
+      &.active {
+        background-color: #bb231b;
+        border-radius: 6px;
+        span {
+          color: white;
+        }
+      }
+      span {
+        font-family: "Poppins", sans-serif !important;
+        &:first-child {
+          font-size: 18px;
+        }
+        &:last-child {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+    &::after {
+      font-size: 1rem;
+      color: black;
+    }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .swiper.days__list {
+    border-bottom: 1px solid rgb(240, 240, 240);
+    margin-bottom: 2rem;
+    .swiper-slide {
+      button {
+        flex-direction: column-reverse;
+        gap: 0.3rem;
+        position: relative;
+
+        &.active {
+          background-color: white;
+          span {
+            color: #3f76ff;
+            font-weight: 600;
+          }
+          &:before {
+            content: "";
+            position: absolute;
+            width: 1.4rem;
+            height: 4px;
+            background-color: #3f76ff;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+    }
+  }
+}
