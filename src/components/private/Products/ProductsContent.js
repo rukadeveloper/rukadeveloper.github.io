@@ -3,6 +3,7 @@ import useSlider from "../../../hooks/useSlider";
 import useSwipers from "../../../store/swiperStore";
 import ProductsSwiper from "./ProductsSwiper";
 import SwiperBar from "./SwiperBar";
+import productMocks from "../../../mocks/productScript";
 
 const ProductsContent = () => {
   const [store, setStore] = useState([]);
@@ -58,7 +59,7 @@ const ProductsContent = () => {
           }}
         >
           {store.map((stores) => (
-            <ProductsSwiper stores={stores} key={stores.id} />
+            <ProductsSwiper stores={productMocks.data} key={stores.id} />
           ))}
         </div>
         <SwiperBar ref={sliderRef} />

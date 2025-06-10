@@ -201,7 +201,7 @@ const JoinWrapper = () => {
 
   const joinButton = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:8080/api/join", {
+    /* const response = await axios.post("http://localhost:8080/api/join", {
       userName: joinState.idVal,
       password1: joinState.passwordVal,
       password2: joinState.passwordCheckVal,
@@ -213,7 +213,7 @@ const JoinWrapper = () => {
     } else {
       alert("회원가입 실패!");
       dispatch({ type: "INIT" });
-    }
+    } */
   };
 
   return (

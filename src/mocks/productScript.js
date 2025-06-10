@@ -1,0 +1,43 @@
+const productMocks = {
+  status: "success",
+  message: "조회가 완료되었습니다.",
+  data: [
+    {
+      id: 1,
+      productName: "정해영 세이브왕 기념 CLOSER 유니폼",
+      canSale: true,
+      productImage: "/images/shop-sample-removebg-preview.png",
+      salePercent: 12,
+      originalPrice: 12,
+      sale: true,
+    },
+    {
+      id: 2,
+      productName: "정해영 세이브왕 기념 CLOSER 유니폼2",
+      canSale: true,
+      productImage: "/images/shop-sample-removebg-preview.png",
+      salePercent: 12,
+      originalPrice: 12,
+      sale: true,
+    },
+    {
+      id: 3,
+      productName: "정해영 세이브왕 기념 CLOSER 유니폼3",
+      canSale: true,
+      productImage: "/images/shop-sample-removebg-preview.png",
+      salePercent: 12,
+      originalPrice: 12,
+      sale: true,
+    },
+    {
+      id: 4,
+      productName: "정해영 세이브왕 기념 CLOSER 유니폼4",
+      canSale: true,
+      productImage: "/images/shop-sample-removebg-preview.png",
+      salePercent: 12,
+      originalPrice: 12,
+      sale: true,
+    },
+  ],
+  timestamp: "2025-06-10T08:59:55.663019",
+};
