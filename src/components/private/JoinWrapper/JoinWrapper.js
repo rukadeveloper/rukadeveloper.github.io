@@ -39,6 +39,9 @@ const JoinWrap = styled.div`
           border: none;
           outline: none;
           background-color: transparent;
+          &::placeholder {
+            font-size: 14px;
+          }
         }
         label {
           font-size: 0.85rem;

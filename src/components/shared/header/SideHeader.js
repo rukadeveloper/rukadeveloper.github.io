@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideIcons from "./SideIcons";
+import SideButton from "./SideButton";
 
 const SideHeader = () => {
   const [sideActive, setSideActive] = useState(false);
@@ -30,14 +31,12 @@ const SideHeader = () => {
         alt="reservation__icon"
         label="간단 예약하기"
         size={1.4}
-        onClick={false}
       />
       <SideIcons
         src="/images/svg/counsel.svg"
         alt="counsel__icon"
         label="온라인 상담"
         size={1.3}
-        onClick={false}
       />
       <button className="mobile__button">
         <svg
@@ -72,12 +71,11 @@ const SideHeader = () => {
           />
         </svg>
       </button>
-      <SideIcons
+      <SideButton
+        click={clickSideActive}
+        clickState={sideActive}
         src={"/images/svg/arrow.svg"}
-        alt="arrow"
-        label="메뉴 펼치기"
-        size={1.25}
-        onClick={clickSideActive}
+        alt={"arrow"}
       />
     </div>
   );

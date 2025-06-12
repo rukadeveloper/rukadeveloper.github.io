@@ -62,8 +62,12 @@ const InputWrapper = styled.div`
         width: 100%;
         display: block;
         padding: 0.8rem;
+        padding-top: 1rem;
         outline: none;
         font-family: "Poppins", sans-serif !important;
+        &::placeholder {
+          font-size: 14px;
+        }
       }
       &.failed {
         > h2 {
