@@ -7,7 +7,7 @@ const LocalNavigation = ({ menu, headerActive }) => {
     <div
       id="lnb"
       style={{
-        opacity: headerActive ? "1" : "0",
+        opacity: !headerActive && "0",
         display: headerActive ? "block" : "none",
       }}
     >

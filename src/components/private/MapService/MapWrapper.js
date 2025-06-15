@@ -172,7 +172,7 @@ const Mapper = styled.div`
 `;
 
 const MapWrapper = () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const regionMap = ["경기도", "서울", "경상도", "충청도", "부산", "전라도"];
 

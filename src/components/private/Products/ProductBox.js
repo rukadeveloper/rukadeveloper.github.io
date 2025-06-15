@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import ProductImageBox from "./ProductImageBox";
 import { Link } from "react-router-dom";
 

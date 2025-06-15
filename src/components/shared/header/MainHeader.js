@@ -80,7 +80,6 @@ const MHeader = styled.header`
                 opacity: 0.45;
                 &:hover {
                   color: rgba(255, 170, 11);
-                  opacity: 1;
                 }
                 &:first-child {
                   padding-top: 1.6rem;
@@ -148,10 +147,22 @@ const MHeader = styled.header`
               > a {
                 padding: 0 1.8rem;
               }
+              #lnb {
+                animation: opacities ease-in-out 1s 2s;
+              }
             }
           }
         }
       }
+    }
+  }
+
+  @keyframes opacities {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 
