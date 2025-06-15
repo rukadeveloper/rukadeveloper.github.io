@@ -2,7 +2,7 @@ import React from "react";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import MainHeader from "./components/shared/Header/MainHeader";
+import MainHeader from "./components/shared/Header/MainHeader.js";
 import Main from "./components/route/Main";
 
 function App() {
