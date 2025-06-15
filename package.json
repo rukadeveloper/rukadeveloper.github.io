@@ -34,7 +34,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://rukadeveloper.github.io/",
+  "homepage": "https://rukadeveloper.github.io/main/",
   "eslintConfig": {
     "extends": [
       "react-app",
