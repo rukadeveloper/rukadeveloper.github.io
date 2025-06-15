@@ -1,33 +1,23 @@
-import React, { useState } from "react";
-import MobileScreen from "./MobileScreen";
+import React from "react";
 
-const MobileMenu = () => {
-  const [mobileScreen, setMobileScreen] = useState(false);
+import { cn } from "../../../utils/utils";
+import MobileGnb from "./MobileGnb";
+import ButtonWrapper from "./ButtonWrapper";
 
+const MobileMenu = ({ setMobileActive, mobileActive }) => {
   return (
-    <div className="mobile__menu">
+    <div className={cn("mobile-menu", !mobileActive && "hidden")}>
       <button
+        className="close-button"
         onClick={() => {
-          setMobileScreen(true);
+          setMobileActive(false);
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="size-6"
-        >
-          <path
-            fillRule="evenodd"
-            d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <span className="sr-only">닫기 버튼</span>
+        <img src="/images/close.svg" alt="close_button" width={36} />
       </button>
-      <MobileScreen
-        mobileScreen={mobileScreen}
-        setMobileScreen={setMobileScreen}
-      />
+      <MobileGnb setMobileActive={setMobileActive} />
+      <ButtonWrapper />
     </div>
   );
 };
