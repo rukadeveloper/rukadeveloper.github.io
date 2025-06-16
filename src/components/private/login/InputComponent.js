@@ -23,7 +23,7 @@ const InputComponent = ({
             placeholder={placeholder}
             value={value}
             onChange={change}
-            onFocus={touching}
+            onBlur={touching}
           />
         </label>
       </div>

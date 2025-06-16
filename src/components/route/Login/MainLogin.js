@@ -1,5 +1,7 @@
 import React, { useReducer } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import InputWrapper from "../../private/login/InputWrapper";
 import InputComponent from "../../private/login/InputComponent";
@@ -89,6 +91,9 @@ const Login = styled.div`
           padding-top: 1.2rem;
           font-size: 1rem;
           color: rgba(0, 0, 0, 0.45);
+          &:hover {
+            color: rgba(0, 0, 0, 0.85);
+          }
         }
       }
     }
@@ -142,6 +147,8 @@ const Login = styled.div`
 `;
 
 const MainLogin = () => {
+  const navigate = useNavigate();
+
   const firstElement = {
     idValue: "",
     idValid: false,
@@ -211,6 +218,10 @@ const MainLogin = () => {
     dispatch({ type: "PW_TOUCHED", val: e.target.value });
   };
 
+  const goJoin = () => {
+    navigate("/join/1");
+  };
+
   return (
     <Login id="login_wrapper">
       <div id="login_inner">
@@ -255,7 +266,7 @@ const MainLogin = () => {
         </InputWrapper>
         <OtherButton>
           <button>아이디/비밀번호 찾기</button>
-          <button>회원가입</button>
+          <button onClick={goJoin}>회원가입</button>
         </OtherButton>
       </div>
     </Login>

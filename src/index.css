@@ -82,3 +82,7 @@ button {
 .hidden {
   transform: translateX(100%);
 }
+
+.w-70 {
+  width: 70%;
+}
