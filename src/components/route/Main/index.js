@@ -1,8 +1,8 @@
 import React from "react";
-import SplitWrapper from "../../private/SplitWrapper";
-import Introduction from "../../private/Introduction/Introduction";
-import Reviewer from "../../private/Reviewer/Reviewer";
-import MapWrapper from "../../private/MapService/MapWrapper";
+import SplitWrapper from "../../private/splitWrapper";
+import Introduction from "../../private/introduction/Introduction";
+import Reviewer from "../../private/reviewer/Reviewer";
+import MapWrapper from "../../private/mapService/MapWrapper";
 
 const Main = () => {
   return (

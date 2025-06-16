@@ -98,10 +98,10 @@ const MHeader = styled.header`
           width: 90px;
           text-align: center;
           padding: 0.5rem 0;
-          padding-top: 0.7rem;
+          padding-top: 0.6rem;
           border: 1px solid rgba(0, 0, 0, 0.45);
           border-radius: 2rem;
-          font-size: 14px;
+          font-size: 0.9rem;
           &:hover {
             border: 1px solid rgb(36, 131, 71);
             color: rgb(36, 131, 71);
