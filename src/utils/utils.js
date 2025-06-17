@@ -12,3 +12,21 @@ export const groupedArray = (data) => {
     return acc;
   }, {});
 };
+
+export const localInit = () => {
+  if (!localStorage.getItem("member-data")) {
+    localStorage.setItem(
+      "member-data",
+      JSON.stringify([
+        {
+          idx: 1,
+          uid: "admin",
+          pwd: "1111",
+          userName: "kim",
+          email: "a@naver.com",
+          phone: "01011111111",
+        },
+      ])
+    );
+  }
+};

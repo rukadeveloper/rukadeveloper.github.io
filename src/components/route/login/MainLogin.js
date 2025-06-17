@@ -7,6 +7,7 @@ import InputWrapper from "../../private/login/InputWrapper";
 import InputComponent from "../../private/login/InputComponent";
 import OtherButton from "../../private/login/OtherButton";
 import { validate } from "../../../utils/loginValidators";
+import { localInit } from "../../../utils/utils";
 
 const Login = styled.div`
   &#login_wrapper {
@@ -158,6 +159,7 @@ const MainLogin = () => {
     pwdValid: false,
     pwdErrorMessage: "",
     pwdTouched: false,
+    allAlertMessage: "",
   };
 
   const reducer = (state, action) => {
@@ -196,6 +198,11 @@ const MainLogin = () => {
             (!validate("PW CHECK", action.val) || !action.val) &&
             "비밀번호 길이가 알맞지 않습니다.",
         };
+      case "LOGIN_ALERT":
+        return {
+          ...state,
+          allAlertMessage: "아이디 혹은 비밀번호가 일치하지 않습니다.",
+        };
       default:
         return state;
     }
@@ -222,13 +229,39 @@ const MainLogin = () => {
     navigate("/join/1");
   };
 
+  const submitLogin = (e) => {
+    e.preventDefault();
+
+    localInit();
+
+    let memberData = localStorage.getItem("member-data");
+
+    console.log(memberData);
+
+    let result = JSON.parse(memberData).find((item) => {
+      if (item.uid === state.idValue && item.pwd === state.pwdValue) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (!result) {
+      dispatch({ type: "LOGIN_ALERT" });
+    } else {
+      sessionStorage.setItem("loginInfo", JSON.stringify(result));
+      alert("로그인에 성공했습니다!");
+      navigate("/");
+    }
+  };
+
   return (
     <Login id="login_wrapper">
       <div id="login_inner">
         <h2>로그인</h2>
         <span>베이스볼 코믹스에 오신 것을 환영합니다.</span>
         <InputWrapper>
-          <form>
+          <form onSubmit={submitLogin}>
             <InputComponent
               type="text"
               htmlFor="id_check"
@@ -268,6 +301,7 @@ const MainLogin = () => {
           <button>아이디/비밀번호 찾기</button>
           <button onClick={goJoin}>회원가입</button>
         </OtherButton>
+        {state.allAlertMessage && <p>{state.allAlertMessage}</p>}
       </div>
     </Login>
   );

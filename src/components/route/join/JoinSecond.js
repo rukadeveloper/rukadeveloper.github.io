@@ -1,10 +1,13 @@
 import React, { useReducer } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import JoinHeader from "../../shared/join-header/JoinHeader";
 import JoinInput from "../../private/join/JoinInput";
 import JoinCheckbox from "../../private/join/JoinCheckbox";
-import { useNavigate } from "react-router-dom";
+
+import { localInit } from "../../../utils/utils";
 
 const Second = styled.div`
   &#join__wrapper {
@@ -228,6 +231,12 @@ const JoinSecond = ({ goThird }) => {
       );
     };
 
+    const idUseCheck = (val) => {
+      const memberData = JSON.parse(localStorage.getItem("member-data")) || [];
+      // 이미 존재하는 아이디가 있으면 false 반환
+      return !memberData.some((user) => user.uid === val);
+    };
+
     switch (action.type) {
       case "ID_CHANGE":
         return {
@@ -242,10 +251,11 @@ const JoinSecond = ({ goThird }) => {
           ...state,
           id: {
             ...state.id,
-            isNest: idCheck(state.id.value),
+            isNest: idCheck(state.id.value) && idUseCheck(state.id.value),
             error:
-              !idCheck(state.id.value) &&
-              "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.",
+              (!idCheck(state.id.value) &&
+                "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.") ||
+              (!idUseCheck(state.id.value) && "이미 있는 아이디입니다"),
             isOpen: true,
           },
         };
@@ -519,13 +529,10 @@ const JoinSecond = ({ goThird }) => {
   const addSubmit = (e) => {
     e.preventDefault();
 
+    localInit();
+
     // 로컬 스토리지 데이터 가져오기
     let memberData = localStorage.getItem("member-data");
-
-    // 로컬 스토리지 체크 함수 (초기화)
-    if (!memberData) {
-      localStorage.setItem("member-data", JSON.stringify(init));
-    }
 
     // 객체 변환
     memberData = JSON.parse(memberData);
