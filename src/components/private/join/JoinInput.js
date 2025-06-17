@@ -21,6 +21,7 @@ const JoinInput = ({
   error,
   touched,
   touch,
+  nestLoading,
 }) => {
   return (
     <div
@@ -54,6 +55,7 @@ const JoinInput = ({
             error={error}
             modalClose={modalClose}
             modalSelect={modalSelect}
+            nestLoading={nestLoading}
           />,
           document.getElementById("root")
         )}

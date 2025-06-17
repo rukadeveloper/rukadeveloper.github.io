@@ -1,8 +1,9 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import qs from "qs";
 
 import styled from "styled-components";
 import JoinHeader from "../../shared/join-header/JoinHeader";
@@ -180,6 +181,7 @@ const JoinInfo = styled.form`
 
 const JoinSecond = ({ goThird }) => {
   const navigate = useNavigate("/join/3");
+  const [nestLoading, setNestLoading] = useState(true);
 
   const init = {
     id: {
@@ -250,6 +252,16 @@ const JoinSecond = ({ goThird }) => {
               !idCheck(state.id.value) &&
               "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.",
             isOpen: true,
+          },
+        };
+      }
+      case "ID_DUPLICATE": {
+        return {
+          ...state,
+          id: {
+            ...state.id,
+            isNest: false,
+            error: action.payload,
           },
         };
       }
@@ -448,9 +460,51 @@ const JoinSecond = ({ goThird }) => {
     dispatch({ type: "ID_CHANGE", val: e.target.value });
   };
 
-  const idNest = () => {
+  const idNest = async () => {
     dispatch({ type: "ID_NEST" });
     document.body.classList.add("dimmed");
+
+    const idUseCheck = async (val) => {
+      setNestLoading(true);
+      let timeoutId;
+      try {
+        const loadingPromise = new Promise((resolve) => {
+          timeoutId = setTimeout(resolve, 2000);
+        });
+
+        const responsePromise = await axios.post(
+          "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/nest/check/id",
+          qs.stringify({
+            uid: val,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        );
+
+        const [response] = await Promise.all([responsePromise, loadingPromise]);
+
+        console.log(response.data.data);
+
+        if (responsePromise.data.data.ok) {
+          return true;
+        } else {
+          return false;
+        }
+      } finally {
+        clearTimeout(timeoutId);
+        setNestLoading(false);
+      }
+    };
+
+    const isUsable = await idUseCheck(state.id.value);
+
+    if (!isUsable) {
+      dispatch({ type: "ID_DUPLICATE", payload: "이미 있는 아이디입니다." });
+    }
+
     return state.id.isOpen;
   };
 
@@ -565,6 +619,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.id.error}
             touched={state.id.touched}
             touch={idTouch}
+            nestLoading={nestLoading}
           />
           <JoinInput
             htmlFor={"pw-form"}
@@ -584,6 +639,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.pw.error}
             touched={state.pw.touched}
             touch={pwTouch}
+            nestLoading={true}
           />
           <JoinInput
             htmlFor={"pw-check-form"}
@@ -603,6 +659,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.pwCheck.error}
             touched={state.pwCheck.touched}
             touch={pwCheckTouch}
+            nestLoading={true}
           />
           <JoinInput
             htmlFor={"name-form"}
@@ -622,6 +679,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.name.error}
             touched={state.name.touched}
             touch={nameTouch}
+            nestLoading={true}
           />
           <JoinInput
             htmlFor={"tel-form"}
@@ -641,6 +699,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.phone.error}
             touched={state.phone.touched}
             touch={phoneTouch}
+            nestLoading={true}
           />
           <JoinInput
             htmlFor={"email-form"}
@@ -660,6 +719,7 @@ const JoinSecond = ({ goThird }) => {
             error={state.email.error}
             touched={state.email.touched}
             touch={emailTouch}
+            nestLoading={true}
           />
           <JoinCheckbox buttonChange={buttonChange} idx={state.genderIdx} />
           <button
