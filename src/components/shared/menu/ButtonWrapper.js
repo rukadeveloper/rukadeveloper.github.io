@@ -33,7 +33,7 @@ const ButtonWrapper = () => {
       )}
       <ButtonIcon className="btns-cart" href="/cart" label="장바구니" />
       {!isAuth && (
-        <ButtonIcon className="btns-join" href="/join" label="회원가입" />
+        <ButtonIcon className="btns-join" href="/join/1" label="회원가입" />
       )}
       {isAuth && <LogoutButton />}
     </div>
