@@ -4,6 +4,7 @@ import styled from "styled-components";
 import JoinHeader from "../../shared/join-header/JoinHeader";
 import JoinInput from "../../private/join/JoinInput";
 import JoinCheckbox from "../../private/join/JoinCheckbox";
+import { useNavigate } from "react-router-dom";
 
 const Second = styled.div`
   &#join__wrapper {
@@ -22,7 +23,7 @@ const Second = styled.div`
   }
 `;
 
-const JoinInfo = styled.div`
+const JoinInfo = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,6 +57,9 @@ const JoinInfo = styled.div`
       outline: none;
       font-size: 1rem;
       background-color: #fff;
+      &[readonly] {
+        opacity: 0.4;
+      }
     }
     button {
       width: 25%;
@@ -120,6 +124,7 @@ const JoinInfo = styled.div`
     color: #fff;
     border-radius: 36px;
     font-weight: 800;
+    margin-bottom: 30px;
     &:disabled {
       opacity: 0.1;
     }
@@ -170,14 +175,14 @@ const JoinInfo = styled.div`
   }
 `;
 
-const JoinSecond = () => {
+const JoinSecond = ({ goThird }) => {
+  const navigate = useNavigate("/join/3");
+
   const init = {
     id: {
       value: "",
-      valid: false,
-      error: "",
-      touched: false,
       isNest: false,
+      isNestClear: false,
       isOpen: false,
     },
     pw: {
@@ -238,8 +243,31 @@ const JoinSecond = () => {
           id: {
             ...state.id,
             isNest: idCheck(state.id.value),
-            error: !idCheck(state.id.value),
+            error:
+              !idCheck(state.id.value) &&
+              "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.",
             isOpen: true,
+          },
+        };
+      }
+      case "MODAL_CLOSE": {
+        return {
+          ...state,
+          id: {
+            ...state.id,
+            isNest: false,
+            isOpen: false,
+          },
+        };
+      }
+      case "MODAL_SELECT": {
+        return {
+          ...state,
+          id: {
+            ...state.id,
+            isNest: true,
+            isNestClear: true,
+            isOpen: false,
           },
         };
       }
@@ -344,7 +372,7 @@ const JoinSecond = () => {
           phone: {
             ...state.phone,
             value: action.val,
-            valid: action.val.trim(),
+            valid: action.val.trim() !== "",
             error:
               !state.phone.valid &&
               state.phone.touched &&
@@ -359,6 +387,53 @@ const JoinSecond = () => {
             touched: true,
           },
         };
+
+      case "BUTTON_CHANGE":
+        return {
+          ...state,
+          genderIdx: action.val,
+        };
+      case "INIT": {
+        return {
+          id: {
+            value: "",
+            isNest: false,
+            isNestClear: false,
+            isOpen: false,
+          },
+          pw: {
+            value: "",
+            valid: false,
+            error: "",
+            touched: false,
+          },
+          pwCheck: {
+            value: "",
+            valid: false,
+            error: "",
+            touched: false,
+          },
+          name: {
+            value: "",
+            valid: false,
+            error: "",
+            touched: false,
+          },
+          phone: {
+            value: "",
+            valid: false,
+            error: "",
+            touched: false,
+          },
+          email: {
+            value: "",
+            valid: false,
+            error: "",
+            touched: false,
+          },
+          genderIdx: 0,
+        };
+      }
       default:
         return state;
     }
@@ -370,10 +445,20 @@ const JoinSecond = () => {
     dispatch({ type: "ID_CHANGE", val: e.target.value });
   };
 
-  const idNest = (e) => {
+  const idNest = () => {
     dispatch({ type: "ID_NEST" });
     document.body.classList.add("dimmed");
     return state.id.isOpen;
+  };
+
+  const modalClose = () => {
+    dispatch({ type: "MODAL_CLOSE" });
+    document.body.classList.remove("dimmed");
+  };
+
+  const modalSelect = () => {
+    dispatch({ type: "MODAL_SELECT" });
+    document.body.classList.remove("dimmed");
   };
 
   const pwChange = (e) => {
@@ -420,25 +505,74 @@ const JoinSecond = () => {
     dispatch({ type: "EMAIL_TOUCHED" });
   };
 
-  const idDisable = !state.id.isNest;
+  const buttonChange = (idx) => {
+    dispatch({ type: "BUTTON_CHANGE", val: idx });
+  };
+
+  const idDisable = !state.id.isNest || !state.id.isNestClear;
   const pwDisable = !state.pw.valid || !state.pw.touched;
   const pwCheckDisable = !state.pwCheck.valid || !state.pwCheck.touched;
   const nameDisable = !state.name.valid || !state.name.touched;
   const phoneDisable = !state.phone.valid || !state.phone.touched;
   const emailDisable = !state.email.valid || !state.email.touched;
 
+  const addSubmit = (e) => {
+    e.preventDefault();
+
+    // 로컬 스토리지 데이터 가져오기
+    let memberData = localStorage.getItem("member-data");
+
+    // 로컬 스토리지 체크 함수 (초기화)
+    if (!memberData) {
+      localStorage.setItem("member-data", JSON.stringify(init));
+    }
+
+    // 객체 변환
+    memberData = JSON.parse(memberData);
+
+    if (!Array.isArray(memberData)) memberData = [];
+
+    // 최대수를 위한 배열값 뽑기
+    let temp = Array.isArray(memberData) ? memberData.map((v) => v.idx) : [];
+
+    // 새로운 데이터 구성하기
+    let newData = {
+      idx: temp.length > 0 ? Math.max(...temp) + 1 : 0,
+      uid: state.id.value,
+      pwd: state.pw.value,
+      userName: state.name.value,
+      email: state.email.value,
+      phone: state.phone.value,
+    };
+
+    // 새로운 데이터 추가하기
+    memberData.push(newData);
+
+    // 새로 셋팅하기
+    localStorage.setItem("member-data", JSON.stringify(memberData));
+
+    // 전부 초기화
+    dispatch({ type: "INIT" });
+    goThird();
+    navigate("/join/3");
+  };
+
   return (
     <Second id="join__wrapper">
       <div className="join__inner">
         <JoinHeader activeClass={1} />
-        <JoinInfo>
+        <JoinInfo onSubmit={addSubmit}>
           <p>* 표시가 되어 있는 항목은 필수로 입력해야 합니다.</p>
           <JoinInput
             htmlFor={"id-form"}
             label={"아이디"}
             isMust={true}
             isNest={idNest}
+            nestState={state.id.isNest}
+            nestClear={state.id.isNestClear}
             nestOpen={state.id.isOpen}
+            modalClose={modalClose}
+            modalSelect={modalSelect}
             placeholder="영어소문자 숫자 포함 6자~20자로 입력해주세요"
             type={"text"}
             value={state.id.value}
@@ -453,7 +587,11 @@ const JoinSecond = () => {
             label={"비밀번호"}
             isMust={true}
             isNest={false}
+            nestState={false}
+            nestClear={false}
             nestOpen={false}
+            modalClose={false}
+            modalSelect={false}
             placeholder="영문(대/소문자 구분), 숫자, 특수문자를 혼용하여 6자리 이상으로 입력해주세요"
             type={"password"}
             value={state.pw.value}
@@ -468,7 +606,11 @@ const JoinSecond = () => {
             label={"비밀번호 확인"}
             isMust={true}
             isNest={false}
+            nestState={false}
+            nestClear={false}
             nestOpen={false}
+            modalClose={false}
+            modalSelect={false}
             placeholder=""
             type={"password"}
             value={state.pwCheck.value}
@@ -483,7 +625,11 @@ const JoinSecond = () => {
             label={"이름"}
             isMust={true}
             isNest={false}
+            nestState={false}
+            nestClear={false}
             nestOpen={false}
+            modalClose={false}
+            modalSelect={false}
             placeholder="이름을 입력해주세요."
             type={"text"}
             value={state.name.value}
@@ -498,7 +644,11 @@ const JoinSecond = () => {
             label={"전화번호"}
             isMust={true}
             isNest={false}
+            nestState={false}
+            nestClear={false}
             nestOpen={false}
+            modalClose={false}
+            modalSelect={false}
             placeholder="전화번호를 입력해주세요(숫자만 입력)"
             type={"text"}
             value={state.phone.value}
@@ -506,14 +656,18 @@ const JoinSecond = () => {
             isValid={state.phone.valid}
             error={state.phone.error}
             touched={state.phone.touched}
-            name={phoneTouch}
+            touch={phoneTouch}
           />
           <JoinInput
             htmlFor={"email-form"}
             label={"이메일"}
             isMust={true}
             isNest={false}
+            nestState={false}
+            nestClear={false}
             nestOpen={false}
+            modalClose={false}
+            modalSelect={false}
             placeholder="이메일을 입력해주세요."
             type={"text"}
             value={state.email.value}
@@ -523,7 +677,7 @@ const JoinSecond = () => {
             touched={state.email.touched}
             touch={emailTouch}
           />
-          <JoinCheckbox />
+          <JoinCheckbox buttonChange={buttonChange} idx={state.genderIdx} />
           <button
             type="submit"
             disabled={

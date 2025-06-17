@@ -46,14 +46,14 @@ const Nest = styled.div`
   }
 `;
 
-const NestModal = ({ error }) => {
+const NestModal = ({ error, modalClose, modalSelect }) => {
   return (
     <Nest id="nest-modal">
       <h2>Nesting Validating</h2>
       <h3>아이디 중복 검사</h3>
-      <p>잘못된 판단입니다.</p>
-      <button>닫기</button>
-      <button>아이디 선택하기</button>
+      {error ? <p>{error}</p> : <p style={{ color: "blue" }}>올바릅니다.</p>}
+      <button onClick={modalClose}>닫기</button>
+      {!error && <button onClick={modalSelect}>아이디 선택하기</button>}
     </Nest>
   );
 };

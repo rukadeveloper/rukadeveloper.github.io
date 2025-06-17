@@ -8,7 +8,11 @@ const JoinInput = ({
   label,
   isMust,
   isNest,
+  nestState,
+  nestClear,
   nestOpen,
+  modalClose,
+  modalSelect,
   placeholder,
   type,
   value,
@@ -33,15 +37,24 @@ const JoinInput = ({
         value={value}
         onChange={change}
         onBlur={touch}
+        readOnly={nestClear && nestState}
       />
       {isNest && (
-        <button disabled={!isValid} onClick={isNest}>
-          중복확인
+        <button
+          onClick={isNest}
+          disabled={nestState && nestClear}
+          type="button"
+        >
+          {nestState && nestClear ? "확인 완료" : "중복 확인"}
         </button>
       )}
       {nestOpen &&
         ReactDOM.createPortal(
-          <NestModal error={error} />,
+          <NestModal
+            error={error}
+            modalClose={modalClose}
+            modalSelect={modalSelect}
+          />,
           document.getElementById("root")
         )}
       {!isNest && !isValid && touched && <b>{error}</b>}

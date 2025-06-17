@@ -5,6 +5,7 @@ import { cn } from "../../../utils/utils";
 
 const JoinCommonHeader = styled.div`
   &#common__header {
+    width: 100%;
     padding-top: 160px;
     > h2 {
       text-align: center;

@@ -133,7 +133,7 @@ const Join = styled.div`
 }
 `;
 
-const MainJoin = () => {
+const MainJoin = ({ goSecond }) => {
   const navigate = useNavigate();
 
   const [firstChecked, setFirstChecked] = useState(false);
@@ -141,6 +141,7 @@ const MainJoin = () => {
   const firstRef = useRef(null);
   const secondRef = useRef(null);
   const goJoin2 = () => {
+    goSecond();
     navigate("/join/2");
   };
 

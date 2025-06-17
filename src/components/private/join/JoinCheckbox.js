@@ -1,12 +1,25 @@
 import React from "react";
+import { cn } from "../../../utils/utils";
 
-const JoinCheckbox = () => {
+const JoinCheckbox = ({ buttonChange, idx }) => {
+  const gender = ["남자", "여자"];
+
   return (
     <div className="join__checkbox">
       <h2>성별</h2>
       <div className="gender-select">
-        <button className="active">남자</button>
-        <button>여자</button>
+        {gender.map((g, i) => (
+          <button
+            key={i}
+            className={cn(idx === i && "active")}
+            type="button"
+            onClick={() => {
+              buttonChange(i);
+            }}
+          >
+            {g}
+          </button>
+        ))}
       </div>
     </div>
   );
