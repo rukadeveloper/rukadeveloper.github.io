@@ -2,12 +2,15 @@ import React, { useReducer } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
+import qs from "qs";
+
 import styled from "styled-components";
 import InputWrapper from "../../private/login/InputWrapper";
 import InputComponent from "../../private/login/InputComponent";
 import OtherButton from "../../private/login/OtherButton";
 import { validate } from "../../../utils/loginValidators";
-import { localInit } from "../../../utils/utils";
+import useLoginToken from "../../../store/useLoginToken";
 
 const Login = styled.div`
   &#login_wrapper {
@@ -229,28 +232,30 @@ const MainLogin = () => {
     navigate("/join/1");
   };
 
-  const submitLogin = (e) => {
+  const { setToken } = useLoginToken();
+
+  const submitLogin = async (e) => {
     e.preventDefault();
 
-    localInit();
+    console.log(state.idValue);
+    console.log(state.pwdValue);
 
-    let memberData = localStorage.getItem("member-data");
-
-    console.log(memberData);
-
-    let result = JSON.parse(memberData).find((item) => {
-      if (item.uid === state.idValue && item.pwd === state.pwdValue) {
-        return true;
-      } else {
-        return false;
+    const response = await axios.post(
+      "http://localhost:8080/login",
+      qs.stringify({
+        username: state.idValue,
+        password: state.pwdValue,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       }
-    });
+    );
 
-    if (!result) {
-      dispatch({ type: "LOGIN_ALERT" });
-    } else {
-      sessionStorage.setItem("loginInfo", JSON.stringify(result));
-      alert("로그인에 성공했습니다!");
+    setToken(response.data.token);
+
+    if (response.status === 200) {
       navigate("/");
     }
   };

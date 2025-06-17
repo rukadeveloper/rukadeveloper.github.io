@@ -2,12 +2,12 @@ import React, { useReducer } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
+
 import styled from "styled-components";
 import JoinHeader from "../../shared/join-header/JoinHeader";
 import JoinInput from "../../private/join/JoinInput";
 import JoinCheckbox from "../../private/join/JoinCheckbox";
-
-import { localInit } from "../../../utils/utils";
 
 const Second = styled.div`
   &#join__wrapper {
@@ -231,12 +231,6 @@ const JoinSecond = ({ goThird }) => {
       );
     };
 
-    const idUseCheck = (val) => {
-      const memberData = JSON.parse(localStorage.getItem("member-data")) || [];
-      // 이미 존재하는 아이디가 있으면 false 반환
-      return !memberData.some((user) => user.uid === val);
-    };
-
     switch (action.type) {
       case "ID_CHANGE":
         return {
@@ -251,11 +245,10 @@ const JoinSecond = ({ goThird }) => {
           ...state,
           id: {
             ...state.id,
-            isNest: idCheck(state.id.value) && idUseCheck(state.id.value),
+            isNest: idCheck(state.id.value),
             error:
-              (!idCheck(state.id.value) &&
-                "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.") ||
-              (!idUseCheck(state.id.value) && "이미 있는 아이디입니다"),
+              !idCheck(state.id.value) &&
+              "아이디 영어 소문자 포함 6자 ~ 20자로 입력해야 합니다.",
             isOpen: true,
           },
         };
@@ -526,42 +519,23 @@ const JoinSecond = ({ goThird }) => {
   const phoneDisable = !state.phone.valid || !state.phone.touched;
   const emailDisable = !state.email.valid || !state.email.touched;
 
-  const addSubmit = (e) => {
+  const formData = new FormData();
+
+  formData.append("userId", state.id.value);
+  formData.append("password", state.pw.value);
+  formData.append("email", state.email.value);
+  formData.append("name", state.name.value);
+  formData.append("phone", state.phone.value);
+
+  const addSubmit = async (e) => {
     e.preventDefault();
 
-    localInit();
+    const response = await axios.post("http://localhost:8080/join", formData);
 
-    // 로컬 스토리지 데이터 가져오기
-    let memberData = localStorage.getItem("member-data");
-
-    // 객체 변환
-    memberData = JSON.parse(memberData);
-
-    if (!Array.isArray(memberData)) memberData = [];
-
-    // 최대수를 위한 배열값 뽑기
-    let temp = Array.isArray(memberData) ? memberData.map((v) => v.idx) : [];
-
-    // 새로운 데이터 구성하기
-    let newData = {
-      idx: temp.length > 0 ? Math.max(...temp) + 1 : 0,
-      uid: state.id.value,
-      pwd: state.pw.value,
-      userName: state.name.value,
-      email: state.email.value,
-      phone: state.phone.value,
-    };
-
-    // 새로운 데이터 추가하기
-    memberData.push(newData);
-
-    // 새로 셋팅하기
-    localStorage.setItem("member-data", JSON.stringify(memberData));
-
-    // 전부 초기화
-    dispatch({ type: "INIT" });
-    goThird();
-    navigate("/join/3");
+    if (response.data) {
+      goThird();
+      navigate("/join/3");
+    }
   };
 
   return (

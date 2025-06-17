@@ -93,7 +93,8 @@ const MHeader = styled.header`
       .btns {
         display: flex;
         gap: 1.1rem;
-        a {
+        a,
+        button {
           display: block;
           width: 90px;
           text-align: center;
