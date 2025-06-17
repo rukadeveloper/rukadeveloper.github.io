@@ -10,11 +10,14 @@ const ButtonWrapper = () => {
   useEffect(() => {
     if (token) {
       const fetchAxios = async () => {
-        const response = await axios.get("http://localhost:8080/login/data", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login/data",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         console.log(response);
       };

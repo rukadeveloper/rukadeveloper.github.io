@@ -530,7 +530,10 @@ const JoinSecond = ({ goThird }) => {
   const addSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await axios.post("http://localhost:8080/join", formData);
+    const response = await axios.post(
+      "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/join",
+      formData
+    );
 
     if (response.data) {
       goThird();

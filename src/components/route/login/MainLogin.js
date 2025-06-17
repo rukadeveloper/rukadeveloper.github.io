@@ -241,7 +241,7 @@ const MainLogin = () => {
     console.log(state.pwdValue);
 
     const response = await axios.post(
-      "http://localhost:8080/login",
+      "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login",
       qs.stringify({
         username: state.idValue,
         password: state.pwdValue,
