@@ -206,6 +206,18 @@ const MainLogin = () => {
           ...state,
           allAlertMessage: "아이디 혹은 비밀번호가 일치하지 않습니다.",
         };
+      case "INIT":
+        return {
+          ...state,
+          idValue: "",
+          idValid: false,
+          idErrorMessage: "",
+          idTouched: false,
+          pwdValue: "",
+          pwdValid: false,
+          pwdErrorMessage: "",
+          pwdTouched: false,
+        };
       default:
         return state;
     }
@@ -240,23 +252,28 @@ const MainLogin = () => {
     console.log(state.idValue);
     console.log(state.pwdValue);
 
-    const response = await axios.post(
-      "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login",
-      qs.stringify({
-        username: state.idValue,
-        password: state.pwdValue,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+    try {
+      const response = await axios.post(
+        "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login",
+        qs.stringify({
+          username: state.idValue,
+          password: state.pwdValue,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      setToken(response.data.token);
+
+      if (response.status === 200) {
+        navigate("/");
       }
-    );
-
-    setToken(response.data.token);
-
-    if (response.status === 200) {
-      navigate("/");
+    } catch (error) {
+      dispatch({ type: "LOGIN_ALERT" });
+      dispatch({ type: "INIT" });
     }
   };
 
