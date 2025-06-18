@@ -1,30 +1,47 @@
 import React, { useEffect } from "react";
+
 import axios from "axios";
+
+import { useLocation } from "react-router-dom";
+
 import ButtonIcon from "./ButtonIcon";
 import useLoginToken from "../../../store/useLoginToken";
 import LogoutButton from "./LogoutButton";
+import ResetButton from "./ResetButton";
+import AdminButton from "./AdminButton";
 
 const ButtonWrapper = () => {
-  const { isAuth, token } = useLoginToken();
+  const { isAuth, setAuth, setLoginData, loginData } = useLoginToken();
+  const location = useLocation();
+
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    if (token) {
+    if (token && location.pathname === "/") {
       const fetchAxios = async () => {
-        const response = await axios.get(
-          "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login/data",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        try {
+          const response = await axios.get(
+            "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login/data",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (response.data.data.uid !== "anonymousUser") {
+            setAuth(true);
+          } else {
+            setAuth(false);
           }
-        );
-
-        console.log(response);
+          setLoginData(response.data.data);
+        } catch (error) {
+          setAuth(false);
+        }
       };
 
       fetchAxios();
     }
-  }, [token]);
+  }, [token, location.pathname, setLoginData, setAuth]);
 
   return (
     <div className="btns">
@@ -36,6 +53,8 @@ const ButtonWrapper = () => {
         <ButtonIcon className="btns-join" href="/join/1" label="회원가입" />
       )}
       {isAuth && <LogoutButton />}
+      {isAuth && loginData.role !== "ROLE_ADMIN" && <ResetButton />}
+      {isAuth && loginData.role === "ROLE_ADMIN" && <AdminButton />}
     </div>
   );
 };

@@ -2,6 +2,8 @@ import React, { useReducer } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import useLoginToken from "../../../store/useLoginToken";
+
 import axios from "axios";
 import qs from "qs";
 
@@ -10,7 +12,6 @@ import InputWrapper from "../../private/login/InputWrapper";
 import InputComponent from "../../private/login/InputComponent";
 import OtherButton from "../../private/login/OtherButton";
 import { validate } from "../../../utils/loginValidators";
-import useLoginToken from "../../../store/useLoginToken";
 
 const Login = styled.div`
   &#login_wrapper {
@@ -152,6 +153,7 @@ const Login = styled.div`
 
 const MainLogin = () => {
   const navigate = useNavigate();
+  const { setAuth } = useLoginToken();
 
   const firstElement = {
     idValue: "",
@@ -244,8 +246,6 @@ const MainLogin = () => {
     navigate("/join/1");
   };
 
-  const { setToken } = useLoginToken();
-
   const submitLogin = async (e) => {
     e.preventDefault();
 
@@ -266,9 +266,9 @@ const MainLogin = () => {
         }
       );
 
-      setToken(response.data.token);
-
       if (response.status === 200) {
+        sessionStorage.setItem("token", response.data.token);
+        setAuth(true);
         navigate("/");
       }
     } catch (error) {
