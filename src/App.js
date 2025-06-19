@@ -10,12 +10,13 @@ import MainLogin from "./components/route/login/MainLogin";
 import MainJoin from "./components/route/join/MainJoin";
 import JoinSecond from "./components/route/join/JoinSecond";
 import JoinThird from "./components/route/join/JoinThird";
-import Reset from "./components/shared/reset/Reset";
+import Reset from "./components/route/reset/index";
 import Admin from "./components/route/admin/Admin";
 
 import NotAdminLayout from "./components/layouts/NotAdminLayout";
 import AdminLayout from "./components/layouts/AdminLayout";
-import useHtmlScreen from "./hooks/useHtmlScreen";
+import FindId from "./components/route/find/id/FindId";
+import FindPassword from "./components/route/find/password/FindPassword";
 
 function App() {
   const [secondEnter, setSecondEnter] = useState(false);
@@ -30,8 +31,6 @@ function App() {
   };
 
   const { isAuth, loginData } = useLoginToken();
-
-  useHtmlScreen();
 
   return (
     <div className="app">
@@ -101,6 +100,24 @@ function App() {
               ) : (
                 <Navigate to="/" replace />
               )
+            }
+          />
+          <Route
+            path="/find/id"
+            element={
+              <NotAdminLayout>
+                <MainHeader />
+                <FindId />
+              </NotAdminLayout>
+            }
+          />
+          <Route
+            path="/find/password"
+            element={
+              <NotAdminLayout>
+                <MainHeader />
+                <FindPassword />
+              </NotAdminLayout>
             }
           />
           <Route

@@ -7,7 +7,7 @@ export const validate = (validators, value) => {
     return idCheck;
   }
   if (validators === "PW CHECK") {
-    pwdCheck = value.trim().length > 0 && value.trim().length < 8;
+    pwdCheck = value.trim().length > 0 && value.trim().length <= 8;
     return pwdCheck;
   }
 };

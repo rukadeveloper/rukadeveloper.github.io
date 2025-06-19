@@ -198,11 +198,16 @@ const Products = styled.div`
               > h2 {
                 font-size: 0.9rem;
                 padding: 0;
-                margin-top: 1.3rem;
-                margin-bottom: 0.9rem;
+                padding-top: 1.3rem;
+                padding-bottom: 0.4rem;
+                &::before {
+                  top: auto;
+                  bottom: 0;
+                }
               }
               > span {
                 font-size: 0.85rem;
+                margin-top: 0.4rem;
               }
             }
           }

@@ -14,6 +14,7 @@ const useFixedScroll = (ref1, ref2, screenWidth) => {
         if (scrollY === 0) {
           if (window.innerWidth >= screenWidth) {
             ref1.current.style.position = "relative";
+            ref1.current.style.top = "0";
             ref1.current.style.alignSelf = "start";
             ref1.current.style.height = "calc(100vh - 90px)";
             ref2.current.classList.remove("end");
@@ -23,9 +24,9 @@ const useFixedScroll = (ref1, ref2, screenWidth) => {
             if (ref1.current.style.position !== "fixed") {
               console.log("dd");
               ref1.current.style.position = "fixed";
-              ref1.current.style.top = "0";
+              ref1.current.style.top = "90px";
               ref1.current.style.left = "0";
-              ref1.current.style.height = "100vh";
+              ref1.current.style.height = "calc(100vh - 90px)";
               ref2.current.parentNode.parentNode.classList.add("end");
             }
           } else {

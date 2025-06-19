@@ -246,6 +246,10 @@ const MainLogin = () => {
     navigate("/join/1");
   };
 
+  const goFind = () => {
+    navigate("/find/id");
+  };
+
   const submitLogin = async (e) => {
     e.preventDefault();
 
@@ -320,7 +324,7 @@ const MainLogin = () => {
           </form>
         </InputWrapper>
         <OtherButton>
-          <button>아이디/비밀번호 찾기</button>
+          <button onClick={goFind}>아이디/비밀번호 찾기</button>
           <button onClick={goJoin}>회원가입</button>
         </OtherButton>
         {state.allAlertMessage && <p>{state.allAlertMessage}</p>}

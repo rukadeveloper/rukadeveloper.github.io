@@ -7,9 +7,8 @@ import useFixedScroll from "../../../hooks/useFixedScroll";
 
 const Split = styled.div`
   &#split-wrapper {
-    margin-top: 90px;
+    padding-top: 90px;
     width: 100%;
-    height: calc(100vh - 90px);
     display: flex;
     &.end {
       justify-content: end;
@@ -34,7 +33,7 @@ const SplitWrapper = () => {
   useEffect(() => {
     if (extendRef.current) {
       const resizeHeight = () => {
-        if (window.innerWidth >= 810 + 15) {
+        if (window.innerWidth >= 810) {
           extendRef.current.style.height = `${
             productRef.current.getBoundingClientRect().height
           }px`;

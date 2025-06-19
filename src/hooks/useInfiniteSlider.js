@@ -10,7 +10,7 @@ const useInfiniteSlider = (ref, stop, screenWidth1, screenWidth2) => {
 
     if (ref.current && Array.from(ref.current.children).length > 0 && !stop) {
       if (
-        window.innerWidth < screenWidth1 + 15 &&
+        window.innerWidth < screenWidth1 &&
         window.innerWidth >= screenWidth2
       ) {
         intervalRef.current = setInterval(() => {

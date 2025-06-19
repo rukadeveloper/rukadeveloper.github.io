@@ -5,6 +5,7 @@ const useLoginToken = create((set) => ({
   isAuth: false,
   loginData: {
     uid: "",
+    password: "",
     uname: "",
     uemail: "",
     role: "",
@@ -19,6 +20,7 @@ const useLoginToken = create((set) => ({
     set({
       loginData: {
         uid: data.uid,
+        password: data.encodedPassword,
         uname: data.uname,
         uemail: data.uemail,
         role: data.role,
