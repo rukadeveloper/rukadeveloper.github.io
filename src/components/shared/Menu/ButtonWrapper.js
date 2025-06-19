@@ -33,8 +33,7 @@ const ButtonWrapper = () => {
           } else {
             setAuth(false);
           }
-          console.log(response.data.data);
-          setLoginData(response.data.data);
+          console.log(response);
         } catch (error) {
           setAuth(false);
         }

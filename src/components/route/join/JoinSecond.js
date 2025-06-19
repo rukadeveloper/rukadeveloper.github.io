@@ -9,6 +9,7 @@ import styled from "styled-components";
 import JoinHeader from "../../shared/join-header/JoinHeader";
 import JoinInput from "../../private/join/JoinInput";
 import JoinCheckbox from "../../private/join/JoinCheckbox";
+import JoinFile from "../../private/join/JoinFile";
 
 const Second = styled.div`
   &#join__wrapper {
@@ -119,6 +120,23 @@ const JoinInfo = styled.form`
       }
     }
   }
+  #join-file {
+    width: 100%;
+    > h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+    > input {
+      display: none;
+    }
+    > button {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 30px;
+    }
+  }
   > button {
     width: 100%;
     font-size: 1.2rem;
@@ -182,6 +200,7 @@ const JoinInfo = styled.form`
 const JoinSecond = ({ goThird }) => {
   const navigate = useNavigate("/join/3");
   const [nestLoading, setNestLoading] = useState(true);
+  const [imgPath, setImgPath] = useState("/images/basic_profile.jpg");
 
   const init = {
     id: {
@@ -449,6 +468,7 @@ const JoinSecond = ({ goThird }) => {
           genderIdx: 0,
         };
       }
+
       default:
         return state;
     }
@@ -580,6 +600,7 @@ const JoinSecond = ({ goThird }) => {
   formData.append("email", state.email.value);
   formData.append("name", state.name.value);
   formData.append("phone", state.phone.value);
+  formData.append("profile", imgPath);
 
   const addSubmit = async (e) => {
     e.preventDefault();
@@ -588,6 +609,8 @@ const JoinSecond = ({ goThird }) => {
       "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/join",
       formData
     );
+
+    console.log(response);
 
     if (response.data) {
       goThird();
@@ -722,6 +745,7 @@ const JoinSecond = ({ goThird }) => {
             nestLoading={true}
           />
           <JoinCheckbox buttonChange={buttonChange} idx={state.genderIdx} />
+          <JoinFile setImgPath={setImgPath} imgPath={imgPath} />
           <button
             type="submit"
             disabled={
