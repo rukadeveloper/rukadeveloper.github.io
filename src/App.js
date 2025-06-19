@@ -11,6 +11,11 @@ import MainJoin from "./components/route/join/MainJoin";
 import JoinSecond from "./components/route/join/JoinSecond";
 import JoinThird from "./components/route/join/JoinThird";
 import Reset from "./components/shared/reset/Reset";
+import Admin from "./components/route/admin/Admin";
+
+import NotAdminLayout from "./components/layouts/NotAdminLayout";
+import AdminLayout from "./components/layouts/AdminLayout";
+import useHtmlScreen from "./hooks/useHtmlScreen";
 
 function App() {
   const [secondEnter, setSecondEnter] = useState(false);
@@ -24,21 +29,49 @@ function App() {
     setThirdEnter(true);
   };
 
-  const { isAuth } = useLoginToken();
+  const { isAuth, loginData } = useLoginToken();
+
+  useHtmlScreen();
 
   return (
     <div className="app">
       <BrowserRouter>
-        <MainHeader />
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<MainLogin />} />
-          <Route path="/join/1" element={<MainJoin goSecond={goSecond} />} />
+          <Route
+            path="/"
+            element={
+              <NotAdminLayout>
+                <MainHeader />
+                <Main />
+              </NotAdminLayout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <NotAdminLayout>
+                <MainHeader />
+                <MainLogin />
+              </NotAdminLayout>
+            }
+          />
+          <Route
+            path="/join/1"
+            element={
+              <NotAdminLayout>
+                <MainHeader />
+                <MainJoin goSecond={goSecond} />
+              </NotAdminLayout>
+            }
+          />
           <Route
             path="/join/2"
             element={
               secondEnter ? (
-                <JoinSecond goThird={goThird} />
+                <NotAdminLayout>
+                  <MainHeader />
+                  <JoinSecond goThird={goThird} />
+                </NotAdminLayout>
               ) : (
                 <Navigate to="/join/1" replace />
               )
@@ -47,12 +80,40 @@ function App() {
           <Route
             path="/join/3"
             element={
-              thirdEnter ? <JoinThird /> : <Navigate to="/join/2" replace />
+              thirdEnter ? (
+                <NotAdminLayout>
+                  <MainHeader />
+                  <JoinThird />
+                </NotAdminLayout>
+              ) : (
+                <Navigate to="/join/2" replace />
+              )
             }
           />
           <Route
             path="/reset"
-            element={isAuth ? <Reset /> : <Navigate to="/" replace />}
+            element={
+              isAuth ? (
+                <NotAdminLayout>
+                  <MainHeader />
+                  <Reset />
+                </NotAdminLayout>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              isAuth && loginData.role === "ROLE_ADMIN" ? (
+                <AdminLayout>
+                  <Admin />
+                </AdminLayout>
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
         </Routes>
       </BrowserRouter>

@@ -53,7 +53,7 @@ const Products = styled.div`
             > h2 {
               font-size: 1.3rem;
               padding-top: 1.3rem;
-              margin-bottom: 1.1rem;
+              padding-bottom: 0.6rem;
               position: relative;
               display: inline-block;
               &::before {
@@ -70,6 +70,7 @@ const Products = styled.div`
               font-weight: 500;
               font-size: 1.1rem;
               display: inline-block;
+              margin-top: 16px;
             }
           }
           &:last-child {
@@ -85,11 +86,26 @@ const Products = styled.div`
     }
   }
 
-  @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1310px) {
     &.product-wrapper {
       padding: 1rem 2rem;
       .product-inner {
         .product-slide {
+          .product-box {
+            a {
+              .product-image-box {
+                img {
+                  width: 300px;
+                }
+              }
+              > h2 {
+                font-size: 1.1rem;
+              }
+              > span {
+                font-size: 0.95rem;
+              }
+            }
+          }
         }
       }
     }

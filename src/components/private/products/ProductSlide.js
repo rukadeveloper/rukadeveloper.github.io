@@ -7,7 +7,7 @@ const ProductSlide = () => {
   const productSlideRef = useRef(null);
   const stop = false;
 
-  useInfiniteSlider(productSlideRef, stop, 810 + 15, 700 + 15);
+  useInfiniteSlider(productSlideRef, stop, 810, 700);
 
   return (
     <div className="product-slide" ref={productSlideRef}>

@@ -28,7 +28,7 @@ const JoinCheck = ({ head, isMust, click, checked, commonRef, htmlFor }) => {
           checked={checked}
           onChange={click}
         />
-        <label for={htmlFor}>동의합니다</label>
+        <label htmlFor={htmlFor}>동의합니다</label>
       </div>
     </div>
   );
