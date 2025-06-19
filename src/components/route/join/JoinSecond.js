@@ -606,7 +606,7 @@ const JoinSecond = ({ goThird }) => {
     e.preventDefault();
 
     const response = await axios.post(
-      "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/join",
+      "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/join",
       formData
     );
 

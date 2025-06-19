@@ -10,22 +10,20 @@ import useUpdatePassword from "../../../hooks/useUpdatePassword";
 import useUpdatePasswordCheck from "../../../hooks/useUpdatePasswordCheck";
 import useUpdateName from "../../../hooks/useUpdateName";
 import useUpdateEmail from "../../../hooks/useUpdateEmail";
+import useUpdatePhone from "../../../hooks/useUpdatePhone";
+import ResetFile from "./ResetFile";
 
 const ResetInformation = () => {
   const navigate = useNavigate();
-  const { loginData } = useLoginToken();
+  const { loginData, setProfile } = useLoginToken();
 
   const [idOk, setIdOk] = useState(true);
   const [passOk, setPassOk] = useState(false);
   const [nameOk, setNameOk] = useState(false);
   const [emailOk, setEmailOk] = useState(false);
+  const [phoneOk, setPhoneOk] = useState(false);
 
-  console.log({
-    idOk,
-    passOk,
-    nameOk,
-    emailOk,
-  });
+  console.log(loginData.profile);
 
   const {
     passwordChange,
@@ -57,22 +55,33 @@ const ResetInformation = () => {
     emailTouched,
   } = useUpdateEmail();
 
+  const {
+    phoneChange,
+    phoneBlur,
+    phoneValid,
+    phoneError,
+    phoneValue,
+    phoneTouched,
+  } = useUpdatePhone();
+
   const formData = new FormData();
 
   formData.append("userId", loginData.uid);
   formData.append("password", passValue);
   formData.append("email", emailValue);
   formData.append("name", nameValue);
+  formData.append("phone", phoneValue);
+  formData.append("profile", loginData.profile);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
-        "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/update",
+        "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/update",
         formData
       );
-      console.log(response.data);
+      console.log("dd: " + response.data);
       if (response.data.status === "success") {
         alert("정보 수정 성공!");
         navigate("/");
@@ -161,10 +170,26 @@ const ResetInformation = () => {
           ok={emailOk}
           okLabel={"변경 완료"}
         />
+        <ResetInput
+          type={"text"}
+          label={"핸드폰 번호"}
+          buttonLabel="변경하기"
+          value={phoneValue}
+          change={phoneChange}
+          blur={phoneBlur}
+          valid={phoneValid}
+          error={phoneError}
+          touched={phoneTouched}
+          addedCondition={true}
+          click={setPhoneOk}
+          ok={phoneOk}
+          okLabel={"변경 완료"}
+        />
+        <ResetFile file={loginData.profile} setProfile={setProfile} />
         <div className="submit">
           <button
             type="submit"
-            disabled={!idOk || !passOk || !nameOk || !emailOk}
+            disabled={!idOk || !passOk || !nameOk || !emailOk || !phoneOk}
           >
             업데이트 완료시키기
           </button>

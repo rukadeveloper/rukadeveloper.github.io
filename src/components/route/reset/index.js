@@ -69,6 +69,45 @@ const Setter = styled.div`
               font-weight: 400;
             }
           }
+          #file-wrapper {
+            width: 100%;
+            height: 75px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            h2 {
+              padding-right: 20px;
+              display: block;
+              width: 250px;
+              font-weight: 500;
+              font-size: 1rem;
+            }
+            #profile {
+              width: 50px;
+              height: 50px;
+              background-color: black;
+              border-radius: 50%;
+              background-repeat: no-repeat;
+              background-size: 100%;
+              background-position: center;
+            }
+            input {
+              display: none;
+            }
+            button {
+              display: block;
+              width: 100px;
+              height: 40px;
+              font-size: 1rem;
+              background-color: #fff;
+              border: 1px solid #111;
+              margin-left: 20px;
+              &:disabled {
+                opacity: 0.3;
+              }
+            }
+          }
           > .submit {
             width: 100%;
             padding-bottom: 40px;

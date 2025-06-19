@@ -24,8 +24,17 @@ const useLoginToken = create((set) => ({
         uname: data.uname,
         uemail: data.uemail,
         role: data.role,
+        phone: data.phone,
+        profile: data.profile,
       },
     }),
+  setProfile: (profile) =>
+    set((state) => ({
+      loginData: {
+        ...state.loginData,
+        profile,
+      },
+    })),
 }));
 
 export default useLoginToken;

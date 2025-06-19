@@ -21,7 +21,7 @@ const ButtonWrapper = () => {
       const fetchAxios = async () => {
         try {
           const response = await axios.get(
-            "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/login/data",
+            "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/login/data",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -30,6 +30,7 @@ const ButtonWrapper = () => {
           );
           if (response.data.data.uid !== "anonymousUser") {
             setAuth(true);
+            setLoginData(response.data.data);
           } else {
             setAuth(false);
           }
