@@ -130,6 +130,150 @@ const Setter = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1200px) {
+    &#reset-sec {
+      #reset-inner {
+        max-width: 80%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    &#reset-sec {
+      #reset-inner {
+        .reset-info {
+          form {
+            .input-wrapper {
+              label {
+                width: 150px;
+              }
+            }
+            #file-wrapper {
+              h2 {
+                width: 150px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 845px) {
+    &#reset-sec {
+      #reset-inner {
+        .reset-info {
+          form {
+            .input-wrapper {
+              input {
+                width: 200px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 730px) {
+    &#reset-sec {
+      #reset-inner {
+        .reset-title {
+          h2 {
+            font-size: 1.9rem;
+          }
+        }
+        .reset-info {
+          form {
+            .input-wrapper {
+              height: 100px;
+              flex-direction: column;
+              align-items: start;
+              gap: 10px;
+              position: relative;
+              input {
+                width: 300px;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+              }
+              button {
+                position: absolute;
+                bottom: 1rem;
+                left: 330px;
+              }
+            }
+            #file-wrapper {
+              h2 {
+                width: 310px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    &#reset-sec {
+      #reset-inner {
+        .reset-info {
+          form {
+            .input-wrapper {
+              height: 170px;
+              justify-content: center;
+              button {
+                position: static;
+                margin-left: 0;
+                width: 140px;
+                height: 40px;
+              }
+            }
+            #file-wrapper {
+              position: relative;
+              h2 {
+                position: absolute;
+              }
+              #profile {
+                margin-left: 120px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 460px) {
+    &#reset-sec {
+      #reset-inner {
+        .reset-info {
+          form {
+            .input-wrapper {
+              input {
+                width: 200px;
+              }
+            }
+            #file-wrapper {
+              height: 155px;
+              flex-direction: column;
+              align-items: start;
+              gap: 10px;
+              h2 {
+                position: static;
+              }
+              #profile {
+                margin-left: 0;
+              }
+              button {
+                margin-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 const Reset = () => {

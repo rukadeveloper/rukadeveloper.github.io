@@ -7,6 +7,8 @@ const FindHeader = styled.div`
   &#find__header {
     display: flex;
     width: 500px;
+    position: absolute;
+    top: 250px;
     a {
       display: block;
       flex: 1;
@@ -19,6 +21,25 @@ const FindHeader = styled.div`
         font-weight: 700;
         background-color: #000;
         color: #fff;
+      }
+    }
+  }
+
+  @media screen and (max-width: 530px) {
+    &#find__header {
+      width: 80%;
+      a {
+        font-size: 0.95em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 420px) {
+    &#find__header {
+      flex-direction: column;
+      top: 200px;
+      a {
+        border-bottom: none;
       }
     }
   }

@@ -108,7 +108,7 @@ const ResetInformation = () => {
           addedCondition={true}
           click={setIdOk}
           ok={idOk}
-          kLabel={"변경 불가"}
+          okLabel={"변경 불가"}
         />
         <ResetInput
           type={"password"}

@@ -13,6 +13,7 @@ const FindIds = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   form {
     width: 100%;
     b {
@@ -39,6 +40,22 @@ const FindIds = styled.div`
       border-radius: 30px;
       &:disabled {
         opacity: 0.3;
+      }
+    }
+  }
+
+  @media screen and (max-width: 530px) {
+    form {
+      b {
+        padding-top: 40px;
+        text-align: center;
+      }
+      input,
+      button {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 20px;
+        display: block;
       }
     }
   }
