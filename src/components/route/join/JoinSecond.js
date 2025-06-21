@@ -10,6 +10,8 @@ import JoinHeader from "../../shared/join-header/JoinHeader";
 import JoinInput from "../../private/join/JoinInput";
 import JoinCheckbox from "../../private/join/JoinCheckbox";
 import JoinFile from "../../private/join/JoinFile";
+import useLoading from "../../../store/useLoading";
+import BarLoader from "../../shared/loader/BarLoader";
 
 const Second = styled.div`
   &#join__wrapper {
@@ -201,6 +203,8 @@ const JoinSecond = ({ goThird }) => {
   const navigate = useNavigate("/join/3");
   const [nestLoading, setNestLoading] = useState(true);
   const [imgPath, setImgPath] = useState("/images/basic_profile.jpg");
+
+  const { profileLoading } = useLoading();
 
   const init = {
     id: {
@@ -493,7 +497,7 @@ const JoinSecond = ({ goThird }) => {
         });
 
         const responsePromise = await axios.post(
-          "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/nest/check/id",
+          "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/nest/check/id",
           qs.stringify({
             uid: val,
           }),
@@ -620,6 +624,7 @@ const JoinSecond = ({ goThird }) => {
 
   return (
     <Second id="join__wrapper">
+      {profileLoading && <BarLoader />}
       <div className="join__inner">
         <JoinHeader activeClass={1} />
         <JoinInfo onSubmit={addSubmit}>

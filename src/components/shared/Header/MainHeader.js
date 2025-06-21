@@ -73,6 +73,10 @@ const MHeader = styled.header`
               right: 0;
               top: 100%;
               z-index: 10;
+              opacity: 0;
+              height: 0;
+              overflow: hidden;
+              transition: opacity 1s ease-in-out 0.5s;
               a {
                 text-align: center;
                 padding-bottom: 1.6rem;
@@ -148,6 +152,10 @@ const MHeader = styled.header`
             > li {
               > a {
                 padding: 0 1.8rem;
+              }
+              #lnb {
+                opacity: 1;
+                height: 450px;
               }
             }
           }

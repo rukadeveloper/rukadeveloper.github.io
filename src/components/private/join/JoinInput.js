@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { cn } from "../../../utils/utils";
 import NestModal from "./NestModal";
+import { validate } from "../../../utils/loginValidators";
 
 const JoinInput = ({
   htmlFor,
@@ -43,7 +44,7 @@ const JoinInput = ({
       {isNest && (
         <button
           onClick={isNest}
-          disabled={nestState && nestClear}
+          disabled={(nestState && nestClear) || !validate("ID CHECK", value)}
           type="button"
         >
           {nestState && nestClear ? "확인 완료" : "중복 확인"}

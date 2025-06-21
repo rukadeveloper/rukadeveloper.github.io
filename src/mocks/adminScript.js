@@ -1,5 +1,10 @@
 export const adminMenu = [
   {
+    firstName: "대쉬보드",
+    firstLink: "/admin",
+    second: [],
+  },
+  {
     firstName: "관리",
     firstLink: "/admin/member/management",
     second: [
@@ -20,6 +25,11 @@ export const adminMenu = [
   {
     firstName: "결제 관리",
     firstLink: "/admin/pay/management",
+    second: [],
+  },
+  {
+    firstName: "채팅 관리",
+    firstLink: "/admin/chat/management",
     second: [],
   },
 ];

@@ -1,8 +1,11 @@
 import React, { useReducer } from "react";
+import ReactDOM from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
 import useLoginToken from "../../../store/useLoginToken";
+import { validate } from "../../../utils/loginValidators";
+import useLoading from "../../../store/useLoading";
 
 import axios from "axios";
 import qs from "qs";
@@ -11,7 +14,7 @@ import styled from "styled-components";
 import InputWrapper from "../../private/login/InputWrapper";
 import InputComponent from "../../private/login/InputComponent";
 import OtherButton from "../../private/login/OtherButton";
-import { validate } from "../../../utils/loginValidators";
+import BarLoader from "../../shared/loader/BarLoader";
 
 const Login = styled.div`
   &#login_wrapper {
@@ -154,6 +157,7 @@ const Login = styled.div`
 const MainLogin = () => {
   const navigate = useNavigate();
   const { setAuth } = useLoginToken();
+  const { setLoginLoading, loginLoading } = useLoading();
 
   const firstElement = {
     idValue: "",
@@ -253,10 +257,9 @@ const MainLogin = () => {
   const submitLogin = async (e) => {
     e.preventDefault();
 
-    console.log(state.idValue);
-    console.log(state.pwdValue);
-
     try {
+      setLoginLoading(true);
+      document.body.classList.add("dimmed");
       const response = await axios.post(
         "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/login",
         qs.stringify({
@@ -278,11 +281,16 @@ const MainLogin = () => {
     } catch (error) {
       dispatch({ type: "LOGIN_ALERT" });
       dispatch({ type: "INIT" });
+    } finally {
+      setLoginLoading(false);
+      document.body.classList.remove("dimmed");
     }
   };
 
   return (
     <Login id="login_wrapper">
+      {loginLoading &&
+        ReactDOM.createPortal(<BarLoader />, document.getElementById("root"))}
       <div id="login_inner">
         <h2>로그인</h2>
         <span>베이스볼 코믹스에 오신 것을 환영합니다.</span>

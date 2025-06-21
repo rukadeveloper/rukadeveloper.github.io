@@ -1,7 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
-import Loading from "../../shared/loader/Loading";
+import BarLoader from "../../shared/loader/BarLoader";
 
 const Nest = styled.div`
   &#nest-modal {
@@ -48,9 +48,12 @@ const Nest = styled.div`
 `;
 
 const NestModal = ({ error, modalClose, modalSelect, nestLoading }) => {
+  if (nestLoading) {
+    return <BarLoader />;
+  }
+
   return (
     <Nest id="nest-modal">
-      {nestLoading && <Loading />}
       <h2>Nesting Validating</h2>
       <h3>아이디 중복 검사</h3>
       {error ? <p>{error}</p> : <p style={{ color: "blue" }}>올바릅니다.</p>}

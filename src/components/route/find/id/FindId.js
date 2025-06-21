@@ -91,7 +91,7 @@ const FindId = () => {
 
     try {
       const response = await axios.post(
-        "https://port-0-baseball-comics-backend-mc0wwsqha35e654e.sel5.cloudtype.app/find/id",
+        "https://port-0-baseball-backend-clone-mc0wwsqha35e654e.sel5.cloudtype.app/find/id",
         formData
       );
 
